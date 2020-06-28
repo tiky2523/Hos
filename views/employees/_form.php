@@ -48,16 +48,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'sex')->textInput() ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
-            <?= $form->field($model, 'birthdath')->widget(DatePicker::ClassName(),[
-                'language'=>'th',
-                'dateFormat'=>'yyyy-MM-dd',
-                'clientOption'=>[
-                    'changeMonth'=>true,
-                    'changeYear'=>true,],
-                'option'=>['class'=>'form-control'],
-                ]);
-              
-            ?> 
+            <?= $form->field($model, 'birthdath')->textInput() ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'adress')->textInput(['maxlength' => true]) ?>
