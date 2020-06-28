@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Employees */
@@ -16,7 +17,7 @@ use kartik\date\DatePicker;
 
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?=
-            $form->field($model, 'cid')->widget(\yii\widgets\MaskedInput::classname(), [
+            $form->field($model, 'cid')->widget(MaskedInput::classname(), [
                 'mask' => '9-9999-99999-99-9',
             ])
             ?>
