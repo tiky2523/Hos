@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Employees */
@@ -48,7 +49,17 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'sex')->textInput() ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
-            <?= $form->field($model, 'birthdath')->textInput() ?>
+
+            <?= $form->field($model, 'birthdath')->widget(DatePicker::ClassName(),
+            [
+            'language'=>'th',
+            'name' => 'check_issue_date', 
+            'options' => ['placeholder' => 'Select date ...'],
+            'pluginOptions' => [
+            'format' => 'yyyy-MM-dd',
+            'todayHighlight' => true
+            ]
+            ]);?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'adress')->textInput(['maxlength' => true]) ?>
