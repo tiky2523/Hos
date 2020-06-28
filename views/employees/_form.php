@@ -11,46 +11,88 @@ use yii\widgets\ActiveForm;
 <div class="employees-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
+<div class="row">
+
         <div class="col-xs-3 col-sm-3 col-md-3">
-            <?= $form->field($model, 'id')->textInput() ?>
+            <?=
+            $form->field($model, 'cid')->widget(\yii\widgets\MaskedInput::classname(), [
+                'mask' => '9-9999-99999-99-9',
+            ])
+            ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
-            <?= $form->field($model, 'cid')->widget(\yii\widgets\MaskedInput::classname(),[
-                'mask'=>'9-9999-99999-99-9',
-            ]) ?>
+            <?=
+            $form->field($model, 'prename')->dropDownList([
+                'นาย' => 'นาย',
+                'นาง' => 'นาง',
+                'นางสาว' => 'นางสาว',
+                    ], ['prompt' => 'เลือกคำนำหน้า..']);
+            ?>
+        </div>     
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
         </div>
-        <?= $form->field($model, 'prename')->textInput(['maxlength' => true]) ?>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?= $form->field($model, 'lname')->textInput(['maxlength' => true]) ?>
+        </div>
+</div>
 
-        <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
+<div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?php
+            echo $form->field($model, 'sex')->radioList([
+                        '1'=>'ชาย',
+                        '2'=>'หญิง',    
+                ]);
+            ?>
+            <?= $form->field($model, 'sex')->textInput() ?>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?= $form->field($model, 'birthdath')->textInput() ?> 
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?= $form->field($model, 'adress')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?= $form->field($model, 'tumbon')->textInput() ?>
+        </div>
+</div>
 
-        <?= $form->field($model, 'lname')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'sex')->textInput() ?>
-
-        <?= $form->field($model, 'birthdath')->textInput() ?>
-
-        <?= $form->field($model, 'adress')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'tumbon')->textInput() ?>
-
+<div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'amphur')->textInput() ?>
-
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'chw')->textInput() ?>
-
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'education')->dropDownList(['' => '',], ['prompt' => '']) ?>
-
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'ability')->textInput(['maxlength' => true]) ?>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'department_id')->textInput() ?>
-
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'comein')->textInput() ?>
-
-        <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
-
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
+        <?= $form->field($model, 'department_id')->textInput() ?>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'status')->textInput() ?>
+    </div>   
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
+    </div>
+</div>
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
