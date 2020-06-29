@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use yii\widgets\MaskedInput;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Employees */
@@ -65,17 +67,24 @@ use yii\widgets\MaskedInput;
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'adress')->textarea(['row' => 3]) ?>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">
-            <?= $form->field($model, 'tumbon')->textInput() ?>
-        </div>
 </div>
 
 <div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3">
+        <?= $form->field($model, 'chw')->widget(select2::className(),[
+            'data'=>ArrayHelper::map(app\models\Provinces::find()->all(),'PROVINCE_ID','PROVINCE_NAME'),
+            'language'=>'th',
+            'options' => ['placeholder' => 'เลือกจังหวัด ...'],
+            'pluginOptions' => [
+                'allowClear'=>true
+            ],
+        ]); ?>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'amphur')->textInput() ?>
     </div>
     <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'chw')->textInput() ?>
+        <?= $form->field($model, 'tumbon')->textInput() ?>
     </div>
     <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'education')->dropDownList(['' => '',], ['prompt' => '']) ?>
