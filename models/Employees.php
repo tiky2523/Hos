@@ -79,4 +79,7 @@ class Employees extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+    public function getDepartment(){
+        return $this->hasOne(Departments::ClassName(),['id'=>'department_id']);
+    }
 }

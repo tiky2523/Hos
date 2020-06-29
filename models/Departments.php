@@ -45,4 +45,7 @@ class Departments extends \yii\db\ActiveRecord
             'group_id' => 'Group ID',
         ];
     }
+    public function getGruops(){
+        return $this->hasOne(Groups::ClassName(),['id'=>'group_id']);
+    }
 }
