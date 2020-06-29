@@ -63,7 +63,7 @@ use yii\widgets\MaskedInput;
             ]);?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
-            <?= $form->field($model, 'adress')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'adress')->textarea(['row' => 3]) ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'tumbon')->textInput() ?>
