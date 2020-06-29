@@ -57,7 +57,7 @@ use yii\widgets\MaskedInput;
             'name' => 'check_issue_date', 
             'options' => ['placeholder' => 'Select date ...'],
             'pluginOptions' => [
-            'format' => 'yyyy-MM-dd',
+            'format' => 'yyyy-mm-dd',
             'todayHighlight' => true
             ]
             ]);?>

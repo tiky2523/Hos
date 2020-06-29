@@ -45,4 +45,10 @@ class Departments extends \yii\db\ActiveRecord
             'group_id' => 'Group ID',
         ];
     }
+    public function getGruops(){
+        return $this->hasOne(Groups::ClassName(),['id'=>'group_id']);
+    }
+    public function getEmployees (){
+        return $this->hasMany(Employees::className(),['department_id'=>'id']);
+    }
 }
