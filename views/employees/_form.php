@@ -1,11 +1,17 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+
 use kartik\date\DatePicker;
 use yii\widgets\MaskedInput;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\ActiveForm;
+use kartik\depdrop\DepDrop;
+use yii\helpers\Url;
+use app\models\Provinces;
+use app\models\Amphures;
+use app\models\Districts;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Employees */
@@ -81,7 +87,21 @@ use yii\helpers\ArrayHelper;
         ]); ?>
     </div>
     <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'amphur')->textInput() ?>
+    <?= $form->field($model, 'amphur')->widget(DepDrop::className(),[
+        'data'=>[$amp],
+        'options'=>['placeholder'=>'<--คลิกเลือกอำเภอ-->'],
+        'disabled'=>true,
+        'type'=> DepDrop::TYPE_SELECT2,
+        'select2Options'=>['pluginOptions'=>['allowCtear'=>true]],
+        'pluginOption'=>[
+            'depends'=>['employees-chw'],
+            'url'=> Url::to(['/employees/get-amp']),
+            'loadingText'=>'Loading1...'
+        ],
+            
+        ]); 
+    ?>
+        
     </div>
     <div class="col-xs-3 col-sm-3 col-md-3">
         <?= $form->field($model, 'tumbon')->textInput() ?>
