@@ -47,12 +47,4 @@ class Provinces extends \yii\db\ActiveRecord
             'GEO_ID' => 'Geo ID',
         ];
     }
-    public function getDista(){//relation จังหวัดไปอำเภอ
-        return $this->hasMany(Districts::className(),['PROVINCE_ID' => 'PROVINCE_ID']);
-        
-    }
-    public function getAmpd(){//relation ตำบล 1 ตำบล มีได้หลายอันในตารางอำเภอ
-        return $this->hasMany(Amphures::className(),['PROVINCE_ID' => 'PROVINCE_ID']);
-        
-    }
 }

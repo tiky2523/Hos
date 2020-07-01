@@ -14,35 +14,32 @@ use Yii;
  * @property int $GEO_ID
  * @property int $PROVINCE_ID
  */
-class Amphures extends \yii\db\ActiveRecord
-{
+class Amphures extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'amphures';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['AMPHUR_CODE', 'AMPHUR_NAME', 'POSTCODE'], 'required'],
-            [['GEO_ID', 'PROVINCE_ID'], 'integer'],
-            [['AMPHUR_CODE'], 'string', 'max' => 4],
-            [['AMPHUR_NAME'], 'string', 'max' => 150],
-            [['POSTCODE'], 'string', 'max' => 5],
+                [['AMPHUR_CODE', 'AMPHUR_NAME', 'POSTCODE'], 'required'],
+                [['GEO_ID', 'PROVINCE_ID'], 'integer'],
+                [['AMPHUR_CODE'], 'string', 'max' => 4],
+                [['AMPHUR_NAME'], 'string', 'max' => 150],
+                [['POSTCODE'], 'string', 'max' => 5],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'AMPHUR_ID' => 'Amphur ID',
             'AMPHUR_CODE' => 'Amphur Code',
@@ -52,12 +49,13 @@ class Amphures extends \yii\db\ActiveRecord
             'PROVINCE_ID' => 'Province ID',
         ];
     }
-    public function getDista(){//relation ตำบลไปอำเภอ
-        return $this->hasMany(Districts::className(),['AMPHUR_ID' => 'AMPHUR_ID']);
-        
+
+    public function getProa() {//relation อำเภอไปจังหวัด
+        return $this->hasOne(Provinces::className(), ['PROVINCE_ID' => 'PROVINCE_ID']);
     }
-    public function getProa(){//relation จังหวัดไปอำเภอ
-        return $this->hasone(Provinces::className(),['PROVINCE_ID' => 'PROVINCE_ID']);
-        
+
+    public function getDista() {//relation อำเภอไปตำบล
+        return $this->hasMany(Districts::className(), ['AMPHUR_ID' => 'AMPHUR_ID']);
     }
+
 }

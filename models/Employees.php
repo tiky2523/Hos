@@ -26,60 +26,93 @@ use Yii;
  * @property string|null $avatar
  * @property int|null $status
  */
-class Employees extends \yii\db\ActiveRecord
-{
+class Employees extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'employees';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id'], 'required'],
-            [['id', 'sex', 'tumbon', 'amphur', 'chw', 'department_id', 'status'], 'integer'],
-            [['birthdath', 'comein'], 'safe'],
-            [['education'], 'string'],
-            [['cid', 'adress', 'ability', 'avatar'], 'string', 'max' => 255],
-            [['prename', 'fname', 'lname'], 'string', 'max' => 100],
-            [['tel'], 'string', 'max' => 50],
-            [['id'], 'unique'],
+                [['id'], 'required'],
+                [['id', 'sex', 'tumbon', 'amphur', 'chw', 'department_id', 'status'], 'integer'],
+                [['birthdath', 'comein', 'ability'], 'safe'],
+                [['education'], 'string'],
+                [['cid', 'adress', 'avatar'], 'string', 'max' => 255],
+                [['prename', 'fname', 'lname'], 'string', 'max' => 100],
+                [['tel'], 'string', 'max' => 50],
+                [['id'], 'unique'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
-            'cid' => 'รหัสบัตร',
-            'prename' => 'คำนำหน้าชื่อ',
-            'fname' => 'ชื่อ',
-            'lname' => 'สกุล',
-            'sex' => 'เพศ',
-            'birthdath' => 'วันเดือนปีเกิด',
-            'adress' => 'ที่อยู่',
-            'tumbon' => 'ตำบล',
-            'amphur' => 'อำเภอ',
-            'chw' => 'จังหวัด',
-            'education' => 'ระดับการศึกษา',
-            'ability' => 'ความสามารถพิเศษ',
-            'tel' => 'เบอร์โทรศัพท์',
-            'department_id' => 'รหัสแผนก',
-            'comein' => 'เข้า',
-            'avatar' => 'รูปประกอบ',
-            'status' => 'สถานะ',
+            'cid' => 'CID',
+            'prename' => 'PRENAME',
+            'fname' => 'FNAME',
+            'lname' => 'LNAME',
+            'sex' => 'SEX',
+            'birthdath' => 'BIRTHDATE',
+            'adress' => 'ADDRESS',
+            'tumbon' => 'TUMBON',
+            'amphur' => 'AMPHUR',
+            'chw' => 'CHW',
+            'education' => 'EDUCATION',
+            'ability' => 'ABILITY',
+            'tel' => 'TEL',
+            'department_id' => 'DEPARMENT_ID',
+            'comein' => 'COMEIN',
+            'avatar' => 'AVATAR',
+            'status' => 'STATUS',
         ];
     }
-    public function getDepartment(){
-        return $this->hasOne(Departments::ClassName(),['id'=>'department_id']);
+
+    public function getDepartment() {
+        return $this->hasOne(Departments::ClassName(), ['id' => 'department_id']);
+    }
+
+    public function getArray($value) {
+        return explode(',', $value);
+    }
+
+    public function setToArray($value) {
+        return is_array($value) ? implode(',', $value) : NULL;
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            if (!empty($this->fname)) {
+                $this->ability = $this->setToArray($this->ability);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function itemAlias($type, $code = NULL) {
+        $_items = array(
+            'ability' => array(
+                'กีฬา' => 'กีฬา',
+                'ดนตรี' => 'ดนตรี',
+                'คอมพิวเตอร์'=>'คอมพิวเตอร์',
+                'ด้านอาหาร'=>'ด้านอาหาร',
+                'งานฝีมือ'=>'งานฝีมือ'
+                ),
+            );
+                if (isset($code)) {
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        } else {
+            return isset($_items[$type]) ? $_items[$type] : false;
+        }
     }
 }

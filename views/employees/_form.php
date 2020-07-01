@@ -1,17 +1,17 @@
 <?php
 
 use yii\helpers\Html;
-
-use kartik\date\DatePicker;
-use yii\widgets\MaskedInput;
+use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\ActiveForm;
-use kartik\depdrop\DepDrop;
-use yii\helpers\Url;
 use app\models\Provinces;
+use kartik\widgets\DepDrop;
 use app\models\Amphures;
 use app\models\Districts;
+use yii\helpers\Url;
+use app\models\Departments;
+use kartik\checkbox\CheckboxX;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Employees */
@@ -21,16 +21,16 @@ use app\models\Districts;
 <div class="employees-form">
 
     <?php $form = ActiveForm::begin(); ?>
-<div class="row">
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3"> 
             <?=
-            $form->field($model, 'cid')->widget(MaskedInput::classname(), [
+            $form->field($model, 'cid')->widget(\yii\widgets\MaskedInput::classname(), [
                 'mask' => '9-9999-99999-99-9',
             ])
             ?>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">
+        </div>        
+        <div class="col-xs-2 col-sm-2 col-md-2">           
             <?=
             $form->field($model, 'prename')->dropDownList([
                 'นาย' => 'นาย',
@@ -38,107 +38,106 @@ use app\models\Districts;
                 'นางสาว' => 'นางสาว',
                     ], ['prompt' => 'เลือกคำนำหน้า..']);
             ?>
-        </div>     
+        </div> 
+
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
         </div>
+
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'lname')->textInput(['maxlength' => true]) ?>
         </div>
-</div>
 
-<div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="col-xs-2 col-sm-2 col-md-2">            
             <?php
             echo $form->field($model, 'sex')->radioList([
-                        '1'=>'ชาย',
-                        '2'=>'หญิง',    
-                ]);
+                '1' => 'ชาย',
+                '2' => 'หญิง',
+            ]);
             ?>
-            <?= $form->field($model, 'sex')->textInput() ?>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">
 
-            <?= $form->field($model, 'birthdath')->widget(DatePicker::ClassName(),
-            [
-            'language'=>'th',
-            'name' => 'check_issue_date', 
-            'options' => ['placeholder' => 'Select date ...'],
-            'pluginOptions' => [
-            'format' => 'yyyy-mm-dd',
-            'todayHighlight' => true
-            ]
-            ]);?>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="col-xs-3 col-sm-3 col-md-3">           
+            <?=
+            $form->field($model, 'birthdath')->widget(DatePicker::className(), [
+                'language' => 'th',
+                'dateFormat' => 'yyyy-mm-dd',
+                'clientOptions' => [
+                    'changeMonth' => true,
+                    'changeYear' => true,
+                ],
+                'options' => ['class' => 'form-control'
+                ],
+            ]);
+            ?>
+        </div>    
+        <div class="col-xs-6 col-sm-6 col-md-6">
             <?= $form->field($model, 'adress')->textarea(['row' => 3]) ?>
+        </div>    
+
+
+        <div class="col-xs-3 col-sm-3 col-md-3">    
+            <?= $form->field($model, 'chw')->textInput() ?>
         </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'chw')->widget(select2::className(),[
-            'data'=>ArrayHelper::map(app\models\Provinces::find()->all(),'PROVINCE_ID','PROVINCE_NAME'),
-            'language'=>'th',
-            'options' => ['placeholder' => 'เลือกจังหวัด ...'],
-            'pluginOptions' => [
-                'allowClear'=>true
-            ],
-        ]); ?>
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-    <?= $form->field($model, 'amphur')->widget(DepDrop::className(),[
-        'data'=>[$amp],
-        'options'=>['placeholder'=>'<--คลิกเลือกอำเภอ-->'],
-        'disabled'=>true,
-        'type'=> DepDrop::TYPE_SELECT2,
-        'select2Options'=>['pluginOptions'=>['allowCtear'=>true]],
-        'pluginOption'=>[
-            'depends'=>['employees-chw'],
-            'url'=> Url::to(['/employees/get-amp']),
-            'loadingText'=>'Loading1...'
-        ],
-            
-        ]); 
-    ?>
-        
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'tumbon')->textInput() ?>
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'education')->dropDownList(['' => '',], ['prompt' => '']) ?>
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'ability')->textInput(['maxlength' => true]) ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'comein')->textInput() ?>
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'department_id')->textInput() ?>
-    </div>
-    <div class="col-xs-3 col-sm-3 col-md-3">
-        <?= $form->field($model, 'status')->textInput() ?>
-    </div>   
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
-    </div>
-</div>
-
-        <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <div class="col-xs-3 col-sm-3 col-md-3">  
+            <?= $form->field($model, 'amphur')->textInput() ?>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">  
+            <?= $form->field($model, 'tumbon')->textInput() ?>          
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?=
+            $form->field($model, 'education')->dropDownList([
+                'ปริณญาตรี' => 'ปริณญาตรี',
+                'ปริณญาโท' => 'ปริณญาโท',
+                'สูงกว่าระดับปริณญาโทขึ้นไป' => 'สูงกว่าระดับปริณญาโทขึ้นไป',
+                'ปวส/อนุปริณญา' => 'ปวส/อนุปริณญา',
+                'มัธยมศึกษา6' => 'มัธยมศึกษา6',
+                'มัธยมศึกษา3' => 'มัธยมศึกษา3',
+                'ประถมศึกษา' => 'ประถมศึกษา',], ['prompt' => ''])
+            ?>
         </div>
 
-        <?php ActiveForm::end(); ?>
-
+        <div class="col-xs-6 col-sm-6col-md-6">
+            <?=
+                    $form->field($model, 'ability')
+                    ->checkboxList(app\models\Employees::itemAlias('ability'))
+            ?>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?=
+            $form->field($model, 'tel')->widget(\yii\widgets\MaskedInput::classname(), [
+                'mask' => '999-999-9999',
+            ])
+            ?>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">            
+            <?=
+            $form->field($model, 'comein')->widget(DatePicker::className(), [
+                'language' => 'th',
+                'dateFormat' => 'yyyy-mm-dd',
+                'clientOptions' => [
+                    'changeMonth' => true,
+                    'changeYear' => true,
+                ],
+                'options' => ['class' => 'form-control'
+                ],
+            ]);
+            ?>
+        </div>
     </div>
+
+
+    <?= $form->field($model, 'department_id')->textInput() ?>
+
+    <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'status')->textInput() ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>

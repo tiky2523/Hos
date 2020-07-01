@@ -14,34 +14,31 @@ use Yii;
  * @property int $PROVINCE_ID
  * @property int $GEO_ID
  */
-class Districts extends \yii\db\ActiveRecord
-{
+class Districts extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'districts';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['DISTRICT_CODE', 'DISTRICT_NAME'], 'required'],
-            [['AMPHUR_ID', 'PROVINCE_ID', 'GEO_ID'], 'integer'],
-            [['DISTRICT_CODE'], 'string', 'max' => 6],
-            [['DISTRICT_NAME'], 'string', 'max' => 150],
+                [['DISTRICT_CODE', 'DISTRICT_NAME'], 'required'],
+                [['AMPHUR_ID', 'PROVINCE_ID', 'GEO_ID'], 'integer'],
+                [['DISTRICT_CODE'], 'string', 'max' => 6],
+                [['DISTRICT_NAME'], 'string', 'max' => 150],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'DISTRICT_ID' => 'District ID',
             'DISTRICT_CODE' => 'District Code',
@@ -51,12 +48,13 @@ class Districts extends \yii\db\ActiveRecord
             'GEO_ID' => 'Geo ID',
         ];
     }
-    public function getAmpd(){//relation ตำบล 1 ตำบล มีได้หลายอันในตารางอำเภอ
-        return $this->hasone(Amphures::className(),['AMPHUR_ID' => 'AMPHUR_ID']);
-        
+
+    public function getAmpd() {//relation ตำบลไปอำเภอ
+        return $this->hasOne(Amphures::className(), ['AMPHUR_ID' => 'AMPHUR_ID']);
     }
-    public function getProa(){//relation ตำบลไปจังหวัด
-        return $this->hasone(Provinces::className(),['PROVINCE_ID' => 'PROVINCE_ID']);
-        
+
+    public function getProd() {//relation ตำบลไปจังหวัด
+        return $this->hasOne(Provinces::className(), ['PROVINCE_ID' => 'PROVINCE_ID']);
     }
+
 }
