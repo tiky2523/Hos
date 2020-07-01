@@ -23,7 +23,7 @@ use kartik\checkbox\CheckboxX;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3"> 
+        <div class="col-xs-2 col-sm-2 col-md-2"> 
             <?=
             $form->field($model, 'cid')->widget(\yii\widgets\MaskedInput::classname(), [
                 'mask' => '9-9999-99999-99-9',
@@ -71,18 +71,18 @@ use kartik\checkbox\CheckboxX;
             ]);
             ?>
         </div>    
-        <div class="col-xs-6 col-sm-6 col-md-6">
+        <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'adress')->textarea(['row' => 3]) ?>
         </div>    
-
-
-        <div class="col-xs-3 col-sm-3 col-md-3">    
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?=
+                    $form->field($model, 'ability')
+                    ->checkboxList(app\models\Employees::itemAlias('ability'))
+            ?>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">    
             <?= $form->field($model, 'chw')->textInput() ?>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">  
             <?= $form->field($model, 'amphur')->textInput() ?>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">  
             <?= $form->field($model, 'tumbon')->textInput() ?>          
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
@@ -98,12 +98,7 @@ use kartik\checkbox\CheckboxX;
             ?>
         </div>
 
-        <div class="col-xs-6 col-sm-6col-md-6">
-            <?=
-                    $form->field($model, 'ability')
-                    ->checkboxList(app\models\Employees::itemAlias('ability'))
-            ?>
-        </div>
+
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?=
             $form->field($model, 'tel')->widget(\yii\widgets\MaskedInput::classname(), [
